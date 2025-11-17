@@ -10,9 +10,8 @@ namespace Lab1
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("To jest cwiczenie 1"); // вихідний текст
+            Console.WriteLine("To jest cwiczenie 1"); 
 
-            // Масив для збереження трьох тварин
             Zwierze[] animals = new Zwierze[3];
 
             for (int i = 0; i < 3; i++)
@@ -35,11 +34,9 @@ namespace Lab1
                 Console.WriteLine();
             }
 
-            // Створимо четвертий об'єкт — копію першої тварини
-            Zwierze clone = new Zwierze(animals[0]); // виклик конструктора копіювання
-            clone.Nazwa = clone.Nazwa + "_clone"; // змінюємо ім'я клону
+            Zwierze clone = new Zwierze(animals[0]); 
+            clone.Nazwa = clone.Nazwa + "_clone";
 
-            // Виведемо інформацію і викличемо daj_glos
             for (int i = 0; i < 3; i++)
             {
                 Console.WriteLine($"Animal #{i+1}: Name={animals[i].Nazwa}, Species={animals[i].Gatunek}, Legs={animals[i].LiczbaNog}");
@@ -58,15 +55,12 @@ namespace Lab1
 
     class Zwierze
     {
-        // Приватні поля
         private string nazwa;
         private string gatunek;
         private int liczbaNog;
 
-        // Статичне поле — лічильник всіх створених тварин
         private static int liczbaZwierzat = 0;
 
-        // Властивості (C#-style)
         public string Nazwa
         {
             get { return nazwa; }
@@ -76,7 +70,6 @@ namespace Lab1
         public string Gatunek
         {
             get { return gatunek; }
-            // можна не дозволяти встановлення типу зверху, тому тільки get — але залишив для прикладу
             set { gatunek = value; }
         }
 
@@ -86,7 +79,6 @@ namespace Lab1
             set { liczbaNog = value; }
         }
 
-        // Конструктор без параметрів
         public Zwierze()
         {
             nazwa = "Rex";
@@ -95,7 +87,6 @@ namespace Lab1
             liczbaZwierzat++;
         }
 
-        // Конструктор з трьома параметрами
         public Zwierze(string nazwa, string gatunek, int liczbaNog)
         {
             this.nazwa = nazwa;
@@ -104,7 +95,6 @@ namespace Lab1
             liczbaZwierzat++;
         }
 
-        // Конструктор копіювання
         public Zwierze(Zwierze other)
         {
             this.nazwa = other.nazwa;
@@ -113,7 +103,6 @@ namespace Lab1
             liczbaZwierzat++;
         }
 
-        // Метод, який видає голос залежно від gatunek
         public void DajGlos()
         {
             string lower = gatunek?.ToLower() ?? "";
@@ -137,16 +126,13 @@ namespace Lab1
             }
         }
 
-        // Статичний метод, який повертає кількість тварин
         public static int GetLiczbaZwierzat()
         {
             return liczbaZwierzat;
         }
 
-        // Деструктор (фіналізатор) — рідко потрібен у .NET, але показаний для прикладу.
         ~Zwierze()
         {
-            // Не покладайся на деструктор для логіки, GC викликає його невизначено.
         }
     }
 }
