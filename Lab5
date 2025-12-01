@@ -1,0 +1,131 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Zad 2
+        ZapiszDoPliku();
+
+        // Zad 3
+        OdczytajZPliku();
+
+        // Zad 4
+        DopiszDoPliku();
+
+        // Zad 6
+        SerializujStudentow();
+
+        // Zad 7
+        DeserializujStudentow();
+    }
+
+    // Zad 2
+    static void ZapiszDoPliku()
+    {
+        Console.WriteLine("Podaj tekst, który chcesz zapisać do pliku (wpisz 'koniec' aby zakończyć):");
+        List<string> dane = new List<string>();
+
+        string input;
+        while ((input = Console.ReadLine()) != "koniec")
+        {
+            dane.Add(input);
+        }
+
+        string filePath = "dane.txt";
+        File.WriteAllLines(filePath, dane);
+        Console.WriteLine("Dane zostały zapisane do pliku 'dane.txt'.");
+    }
+
+    // Zad 3
+    static void OdczytajZPliku()
+    {
+        string filePath = "dane.txt";
+        if (File.Exists(filePath))
+        {
+            string[] lines = File.ReadAllLines(filePath);
+            Console.WriteLine("Dane z pliku:");
+            foreach (string line in lines)
+            {
+                Console.WriteLine(line);
+            }
+        }
+        else
+        {
+            Console.WriteLine("Plik 'dane.txt' nie istnieje.");
+        }
+    }
+
+    // Zad 4
+    static void DopiszDoPliku()
+    {
+        Console.WriteLine("Podaj tekst, który chcesz dopisać do pliku (wpisz 'koniec' aby zakończyć):");
+        List<string> dane = new List<string>();
+
+        string input;
+        while ((input = Console.ReadLine()) != "koniec")
+        {
+            dane.Add(input);
+        }
+
+        string filePath = "dane.txt";
+        File.AppendAllLines(filePath, dane);
+        Console.WriteLine("Dane zostały dopisane do pliku 'dane.txt'.");
+    }
+
+    // Zad 5
+    public class Student
+    {
+        public string Imie { get; set; }
+        public string Nazwisko { get; set; }
+        public List<int> Oceny { get; set; }
+    }
+
+    // Zad 6
+    static void SerializujStudentow()
+    {
+        List<Student> studenci = new List<Student>
+        {
+            new Student { Imie = "Jan", Nazwisko = "Kowalski", Oceny = new List<int> { 5, 4, 3 } },
+            new Student { Imie = "Anna", Nazwisko = "Nowak", Oceny = new List<int> { 5, 5, 4 } },
+            new Student { Imie = "Piotr", Nazwisko = "Zieliński", Oceny = new List<int> { 3, 4, 2 } }
+        };
+
+        string json = JsonSerializer.Serialize(studenci);
+        string filePath = "studenci.json";
+        File.WriteAllText(filePath, json);
+        Console.WriteLine("Lista studentów została zapisane do pliku 'studenci.json'.");
+    }
+
+    // Zad 7
+    static void DeserializujStudentow()
+    {
+        string filePath = "studenci.json";
+        if (File.Exists(filePath))
+        {
+            string json = File.ReadAllText(filePath);
+            List<Student> studenci = JsonSerializer.Deserialize<List<Student>>(json);
+
+            Console.WriteLine("Dane studentów:");
+            foreach (var student in studenci)
+            {
+                Console.WriteLine($"Imię: {student.Imie}");
+                Console.WriteLine($"Nazwisko: {student.Nazwisko}");
+                Console.WriteLine("Oceny:");
+                foreach (var ocena in student.Oceny)
+                {
+                    Console.WriteLine($" - {ocena}");
+                }
+                Console.WriteLine();
+            }
+        }
+        else
+        {
+            Console.WriteLine("Plik 'studenci.json' nie istnieje.");
+        }
+    }
+}
+
